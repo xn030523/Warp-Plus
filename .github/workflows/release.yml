@@ -74,6 +74,8 @@ jobs:
             - GitHub: [Warp-Plus](https://github.com/xn030523/Warp-Plus)
           releaseDraft: false
           prerelease: false
+          updaterJsonPath: latest.json
+          updaterJsonKeepUniversal: true
           args: ${{ matrix.args }}
 
       - name: Upload artifacts
