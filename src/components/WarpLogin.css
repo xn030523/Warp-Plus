@@ -1,0 +1,259 @@
+/* 教程区域 */
+.tutorial {
+  margin-top: 48px;
+  max-width: 1200px;
+}
+
+.tutorial-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.tutorial h3 {
+  font-size: 20px;
+  color: #333;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.tutorial-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.tutorial-step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.step-number {
+  min-width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #24c8db 0%, #1e9fb5 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-image {
+  width: 180px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  object-fit: cover;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.step-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.step-description {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step-description h4 {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+.step-description p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 图片预览 */
+.image-preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 40px;
+  cursor: pointer;
+}
+
+.preview-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  cursor: default;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.preview-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+.preview-close:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+/* 广告栏（内联样式） */
+.ad-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%);
+  border: 2px solid #ff9800;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.ad-icon {
+  font-size: 20px;
+}
+
+.ad-text {
+  color: #333;
+  font-weight: 500;
+}
+
+.ad-price {
+  color: #e65100;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ad-price strong {
+  font-size: 18px;
+  color: #ff5722;
+  font-weight: 700;
+}
+
+.ad-group {
+  color: #666;
+  white-space: nowrap;
+}
+
+.ad-group-link {
+  color: #e65100;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 1px dashed #e65100;
+}
+
+.ad-group-link:hover {
+  color: #ff5722;
+  border-bottom-color: #ff5722;
+}
+
+/* 暗色模式 */
+@media (prefers-color-scheme: dark) {
+  .tutorial h3 {
+    color: #f6f6f6;
+  }
+
+  .tutorial-step {
+    background: #2a2a2a;
+  }
+
+  .step-image {
+    border-color: #3a3a3a;
+  }
+
+  .step-description h4 {
+    color: #f6f6f6;
+  }
+
+  .step-description p {
+    color: #ccc;
+  }
+
+  .preview-close {
+    background: rgba(42, 42, 42, 0.95);
+    color: #f6f6f6;
+  }
+
+  .preview-close:hover {
+    background: #3a3a3a;
+  }
+
+  .ad-banner {
+    background: linear-gradient(135deg, #2a2410 0%, #3a3020 100%);
+    border-color: #ff9800;
+  }
+
+  .ad-text {
+    color: #f6f6f6;
+  }
+
+  .ad-price {
+    color: #ffb74d;
+  }
+
+  .ad-price strong {
+    color: #ff9966;
+  }
+
+  .ad-group {
+    color: #999;
+  }
+
+  .ad-group-link {
+    color: #ffb74d;
+    border-bottom-color: #ffb74d;
+  }
+
+  .ad-group-link:hover {
+    color: #ff9966;
+    border-bottom-color: #ff9966;
+  }
+}

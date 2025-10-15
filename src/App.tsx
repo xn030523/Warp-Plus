@@ -1,6 +1,7 @@
 import { useState } from "react";
 import WarpLogin from "./components/WarpLogin";
 import TempMail from "./components/TempMail";
+import UpdateChecker from "./components/UpdateChecker";
 import "./App.css";
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
   return (
     <div className="app">
       <div className="sidebar">
-        <h1>工具集</h1>
+        <h1>Warp Plus</h1>
         <nav className="nav">
           <button 
             className={`nav-item ${activeTab === "warp" ? "active" : ""}`}
@@ -24,6 +25,10 @@ function App() {
             临时邮箱
           </button>
         </nav>
+        
+        <div className="sidebar-footer">
+          <UpdateChecker />
+        </div>
       </div>
 
       <div className="content">

@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react';
+import './WarpLogin.css';
 
 function WarpLogin() {
   const [refreshToken, setRefreshToken] = useState("");
@@ -71,7 +72,27 @@ function WarpLogin() {
 
       {/* 使用教程 */}
       <div className="tutorial">
-        <h3>使用教程</h3>
+        <div className="tutorial-header">
+          <h3>使用教程</h3>
+          
+          {/* 广告栏 */}
+          <div className="ad-banner">
+            <span className="ad-icon">🎁</span>
+            <span className="ad-text">购买 Warp 2500 额度账户</span>
+            <span className="ad-price">💰 <strong>1元</strong>/个</span>
+            <span className="ad-group">
+              QQ群: 
+              <a 
+                href="https://qm.qq.com/q/vi1EFO0mxG" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="ad-group-link"
+              >
+                1014952167
+              </a>
+            </span>
+          </div>
+        </div>
         
         <div className="tutorial-steps">
           <div className="tutorial-step">
