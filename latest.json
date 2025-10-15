@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "notes": "Warp Plus v1.0.0 首次发布",
+  "pub_date": "2025-10-15T19:13:00Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "",
+      "url": "https://github.com/xn030523/Warp-Plus/releases/download/v1.0.0/Warp.Plus_0.1.0_x64-setup.exe"
+    },
+    "linux-x86_64": {
+      "signature": "",
+      "url": "https://github.com/xn030523/Warp-Plus/releases/download/v1.0.0/Warp.Plus_0.1.0_amd64.AppImage"
+    },
+    "darwin-universal": {
+      "signature": "",
+      "url": "https://github.com/xn030523/Warp-Plus/releases/download/v1.0.0/Warp.Plus_universal.app.tar.gz"
+    }
+  }
+}

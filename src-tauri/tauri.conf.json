@@ -54,7 +54,10 @@
         "https://github.com/xn030523/Warp-Plus/releases/latest/download/latest.json"
       ],
       "dialog": true,
-      "pubkey": ""
+      "pubkey": "",
+      "windows": {
+        "installMode": "passive"
+      }
     }
   }
 }
