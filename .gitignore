@@ -21,3 +21,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Signing keys (NEVER commit these!)
+*.key
+*.key.pub
