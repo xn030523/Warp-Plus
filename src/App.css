@@ -118,6 +118,137 @@ label {
   margin-top: 4px;
 }
 
+.tutorial {
+  margin-top: 48px;
+  max-width: 800px;
+}
+
+.tutorial h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.tutorial-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.tutorial-step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.step-number {
+  min-width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #24c8db 0%, #1e9fb5 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step-image {
+  width: 180px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  object-fit: cover;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.step-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.step-description {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step-description h4 {
+  font-size: 16px;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+.step-description p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.image-preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 40px;
+  cursor: pointer;
+}
+
+.preview-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  cursor: default;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.preview-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+.preview-close:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
 input {
   padding: 12px 16px;
   border: 2px solid #e0e0e0;
@@ -175,49 +306,24 @@ input:focus {
   margin-bottom: 30px;
 }
 
-.generate-btn-large {
-  width: 100%;
-  padding: 24px;
-  background: linear-gradient(135deg, #24c8db 0%, #1e9fb5 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
+.loading-text {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  box-shadow: 0 4px 12px rgba(36, 200, 219, 0.2);
+  gap: 8px;
+  color: #999;
 }
 
-.generate-btn-large:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(36, 200, 219, 0.4);
-}
-
-.generate-btn-large:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
+.spinner-inline {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(36, 200, 219, 0.3);
+  border-top-color: #24c8db;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
-}
-
-.icon {
-  font-size: 24px;
 }
 
 .email-card {
@@ -272,9 +378,14 @@ input:focus {
   gap: 6px;
 }
 
-.copy-btn-new:hover {
+.copy-btn-new:hover:not(:disabled) {
   background: #1e9fb5;
   transform: scale(1.05);
+}
+
+.copy-btn-new:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .copy-icon {
@@ -296,8 +407,13 @@ input:focus {
   gap: 6px;
 }
 
-.refresh-btn:hover {
+.refresh-btn:hover:not(:disabled) {
   background: #5a6268;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .refresh-icon {
@@ -523,6 +639,55 @@ input:focus {
     color: #666;
   }
 
+  .tutorial h3 {
+    color: #f6f6f6;
+  }
+
+  .tutorial-step {
+    background: #2a2a2a;
+  }
+
+  .step-image {
+    border-color: #3a3a3a;
+  }
+
+  .step-description h4 {
+    color: #f6f6f6;
+  }
+
+  .step-description p {
+    color: #ccc;
+  }
+
+  .tutorial h3 {
+    color: #f6f6f6;
+  }
+
+  .tutorial-step {
+    background: #2a2a2a;
+  }
+
+  .step-image {
+    border-color: #3a3a3a;
+  }
+
+  .step-description h4 {
+    color: #f6f6f6;
+  }
+
+  .step-description p {
+    color: #ccc;
+  }
+
+  .preview-close {
+    background: rgba(42, 42, 42, 0.95);
+    color: #f6f6f6;
+  }
+
+  .preview-close:hover {
+    background: #3a3a3a;
+  }
+}
   input {
     background: #2a2a2a;
     border-color: #444;
@@ -542,6 +707,10 @@ input:focus {
   .email-card,
   .mail-list {
     background: #2a2a2a;
+  }
+
+  .loading-text {
+    color: #777;
   }
 
   .email-label {

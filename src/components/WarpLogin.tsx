@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 function WarpLogin() {
   const [refreshToken, setRefreshToken] = useState("");
   const [state, setState] = useState("");
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   // 提取 state 参数
   const extractState = (input: string): string => {
@@ -67,6 +68,107 @@ function WarpLogin() {
 
         <button onClick={handleLogin}>登录 Warp</button>
       </div>
+
+      {/* 使用教程 */}
+      <div className="tutorial">
+        <h3>使用教程</h3>
+        
+        <div className="tutorial-steps">
+          <div className="tutorial-step">
+            <div className="step-number">1</div>
+            <img 
+              src="/warp/1.png" 
+              alt="步骤1" 
+              className="step-image" 
+              onClick={() => setPreviewImage('/warp/1.png')}
+            />
+            <div className="step-description">
+              <h4>步骤一：打开 Warp 并登录</h4>
+              <p>打开 Warp 终端，点击登录按钮，点击登录后关闭浏览器（点击图片放大查看）</p>
+            </div>
+          </div>
+
+          <div className="tutorial-step">
+            <div className="step-number">2</div>
+            <img 
+              src="/warp/2.png" 
+              alt="步骤2" 
+              className="step-image" 
+              onClick={() => setPreviewImage('/warp/2.png')}
+            />
+            <div className="step-description">
+              <h4>步骤二：复制URL</h4>
+              <p>复制完整的URL（点击图片放大查看）</p>
+            </div>
+          </div>
+
+          <div className="tutorial-step">
+            <div className="step-number">3</div>
+            <img 
+              src="/warp/3.png" 
+              alt="步骤3" 
+              className="step-image" 
+              onClick={() => setPreviewImage('/warp/3.png')}
+            />
+            <div className="step-description">
+              <h4>步骤三：粘贴到图中输入框</h4>
+              <p>将复制的信息粘贴到上方输入框（点击图片放大查看）</p>
+            </div>
+          </div>
+
+          <div className="tutorial-step">
+            <div className="step-number">4</div>
+            <img 
+              src="/warp/4.png" 
+              alt="步骤4" 
+              className="step-image" 
+              onClick={() => setPreviewImage('/warp/4.png')}
+            />
+            <div className="step-description">
+              <h4>步骤四：复制Refresh Token</h4>
+              <p>将任意额度的Refresh Token复制（点击图片放大查看）</p>
+            </div>
+          </div>
+
+          <div className="tutorial-step">
+            <div className="step-number">5</div>
+            <img 
+              src="/warp/5.png" 
+              alt="步骤5" 
+              className="step-image" 
+              onClick={() => setPreviewImage('/warp/5.png')}
+            />
+            <div className="step-description">
+              <h4>步骤五：粘贴Refresh Token</h4>
+              <p>吧获取到的Refresh Token 粘贴到图片输入框（点击图片放大查看）</p>
+            </div>
+          </div>
+
+          <div className="tutorial-step">
+            <div className="step-number">6</div>
+            <img 
+              src="/warp/6.png" 
+              alt="步骤6" 
+              className="step-image" 
+              onClick={() => setPreviewImage('/warp/6.png')}
+            />
+            <div className="step-description">
+              <h4>步骤六：点击登录</h4>
+              <p>点击登录后如图打开即可实现上号（点击图片放大查看）</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 图片预览 */}
+      {previewImage && (
+        <div className="image-preview-modal" onClick={() => setPreviewImage(null)}>
+          <div className="preview-content">
+            <button className="preview-close" onClick={() => setPreviewImage(null)}>×</button>
+            <img src={previewImage} alt="预览" className="preview-image" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

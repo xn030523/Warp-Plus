@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/core";
 
 interface Email {
+  id: string;
   from: string;
+  to: string;
   subject: string;
-  date: string;
-  body?: string;
+  content: string;
+  htmlContent: string;
+  hasHtml: boolean;
+  timestamp: number;
 }
 
 function TempMail() {
@@ -48,6 +52,12 @@ function TempMail() {
     }
   };
 
+  // 页面加载时自动生成邮箱
+  useEffect(() => {
+    generateEmail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // 生成邮箱后自动刷新邮件
   useEffect(() => {
     if (!email) return;
@@ -66,37 +76,30 @@ function TempMail() {
       <div className="mail-container">
         {/* 邮箱地址区 */}
         <div className="mail-header">
-          {!email ? (
-            <button onClick={generateEmail} disabled={loading} className="generate-btn-large">
-              {loading ? (
-                <>
-                  <span className="spinner"></span>
-                  生成中...
-                </>
-              ) : (
-                <>
-                  <span className="icon">✉️</span>
-                  生成临时邮箱
-                </>
-              )}
-            </button>
-          ) : (
-            <div className="email-card">
-              <div className="email-label">当前邮箱地址</div>
-              <div className="email-address-box">
-                <span className="email-icon">📧</span>
-                <span className="email-address">{email}</span>
-                <button onClick={copyEmail} className="copy-btn-new">
-                  <span className="copy-icon">📋</span>
-                  复制
-                </button>
-              </div>
-              <button onClick={generateEmail} className="refresh-btn">
-                <span className="refresh-icon">↻</span>
-                重新生成
+          <div className="email-card">
+            <div className="email-label">当前邮箱地址</div>
+            <div className="email-address-box">
+              <span className="email-icon">📧</span>
+              <span className="email-address">
+                {loading && !email ? (
+                  <span className="loading-text">
+                    <span className="spinner-inline"></span>
+                    生成中...
+                  </span>
+                ) : (
+                  email || '未生成'
+                )}
+              </span>
+              <button onClick={copyEmail} className="copy-btn-new" disabled={!email}>
+                <span className="copy-icon">📋</span>
+                复制
               </button>
             </div>
-          )}
+            <button onClick={generateEmail} className="refresh-btn" disabled={loading}>
+              <span className="refresh-icon">↻</span>
+              重新生成
+            </button>
+          </div>
         </div>
 
         {/* 邮件列表区 */}
