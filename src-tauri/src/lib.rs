@@ -4,6 +4,7 @@ use commands::email;
 use commands::registry;
 use commands::mcp_rules;
 use commands::warp_token;
+use commands::auth;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -33,6 +34,16 @@ pub fn run() {
             warp_token::query_warp_usage,
             warp_token::get_warp_usage,
             warp_token::get_local_warp_usage,
+            auth::login,
+            auth::get_session,
+            auth::check_auth,
+            auth::logout,
+            auth::update_balance,
+            auth::get_stats,
+            auth::create_recharge_order,
+            auth::refresh_session,
+            auth::claim_token,
+            auth::get_my_tokens,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

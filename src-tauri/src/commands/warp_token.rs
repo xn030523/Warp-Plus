@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use reqwest;
-use serde_json::Value;
 
 #[cfg(target_os = "windows")]
 use winapi::um::dpapi::CryptUnprotectData;

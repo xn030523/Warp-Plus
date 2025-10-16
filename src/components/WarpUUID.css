@@ -1,7 +1,8 @@
 .warp-uuid {
-  padding: 40px;
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 0;
+  max-width: 700px;
+  width: 100%;
+  margin: 0;
 }
 
 .warp-uuid h2 {
@@ -263,6 +264,8 @@
   color: white;
   font-size: 14px;
   box-shadow: 0 4px 12px rgba(100, 181, 246, 0.3);
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .ad-icon {

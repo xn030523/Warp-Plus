@@ -1,11 +1,51 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { invoke } from '@tauri-apps/api/core';
 import { openUrl } from '@tauri-apps/plugin-opener';
 import './WarpLogin.css';
 
-function WarpLogin() {
+interface UserSession {
+  token: string;
+  role: string;
+  balance: number;
+  logged_in_at: string;
+}
+
+interface StatsData {
+  total: number;
+  pro_trial: number;
+  limit_2500: number;
+}
+
+interface WarpLoginProps {
+  session: UserSession | null;
+  onBalanceUpdate: (newBalance: number) => void;
+}
+
+function WarpLogin({ session, onBalanceUpdate }: WarpLoginProps) {
   const [refreshToken, setRefreshToken] = useState("");
   const [state, setState] = useState("");
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [stats, setStats] = useState<StatsData | null>(null);
+  const [statsLoading, setStatsLoading] = useState(false);
+  const [claimLoading, setClaimLoading] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
+  // 加载统计数据
+  const loadStats = async () => {
+    setStatsLoading(true);
+    try {
+      const data = await invoke<StatsData>('get_stats');
+      setStats(data);
+    } catch (error) {
+      console.log('未登录或获取统计失败:', error);
+    } finally {
+      setStatsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadStats();
+  }, []);
 
   // 提取 state 参数
   const extractState = (input: string): string => {
@@ -45,8 +85,58 @@ function WarpLogin() {
 
   return (
     <div className="warp-login page-content">
-      <h2>Warp 上号器</h2>
+      <div className="header-section">
+        <h2>Warp 上号器</h2>
+        
+        <div className="header-right">
+          {session ? (
+            <button
+              className={`auto-fill-btn ${session.balance >= 1 ? '' : 'disabled'}`}
+              onClick={async () => {
+                if (!session) return;
+                if (session.balance < 1) {
+                  setMessage({ type: 'error', text: '余额不足（需要≥1元）' });
+                  return;
+                }
+                try {
+                  setClaimLoading(true);
+                  const resp = await invoke<{ success: boolean; message: string; data?: { email: string; refresh_token: string; ai_limit: number; new_balance: number; } }>('claim_token');
+                  if (resp && (resp as any).success && resp.data) {
+                    setRefreshToken(resp.data.refresh_token);
+                    onBalanceUpdate(resp.data.new_balance);
+                    setMessage({ type: 'success', text: '领取成功，已自动填充 Refresh Token' });
+                  } else {
+                    setMessage({ type: 'error', text: (resp as any)?.message || '领取失败' });
+                  }
+                } catch (e) {
+                  setMessage({ type: 'error', text: `领取失败: ${e}` });
+                } finally {
+                  setClaimLoading(false);
+                }
+              }}
+              disabled={!session || session.balance < 1 || claimLoading}
+              title={!session ? '请先登录' : (session.balance < 1 ? '余额不足（需要≥1元）' : '')}
+            >
+              {claimLoading ? '领取中...' : '自动领取并填充'}
+            </button>
+          ) : null}
+
+          {stats && (
+            <div className="stats-box">
+              <span className="stats-label">号池剩余:</span>
+              <span className="stats-count">{stats.limit_2500}</span>
+              <button className="stats-refresh-btn" onClick={loadStats} disabled={statsLoading}>
+                {statsLoading ? '↻' : '↻'}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
       
+      {message && (
+        <div className={`message message-${message.type}`}>{message.text}</div>
+      )}
+
       <div className="form">
         <div className="input-group">
           <label>Refresh Token</label>
