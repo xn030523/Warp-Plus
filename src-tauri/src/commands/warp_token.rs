@@ -128,11 +128,11 @@ pub async fn get_warp_user_info() -> Result<WarpUser, String> {
         Ok(user_info)
     }
     
-    #[cfg(any(target_os = "linux", target_os = "macos"))]
+    #[cfg(target_os = "linux")]
     {
         use std::process::Command;
         
-        // 从系统钥匙串读取用户信息
+        // 从系统钥匙串读取用户信息 (Linux - 使用 secret-tool)
         let output = Command::new("secret-tool")
             .args(&["lookup", "service", "dev.warp.Warp", "key", "User"])
             .output()
@@ -143,6 +143,33 @@ pub async fn get_warp_user_info() -> Result<WarpUser, String> {
         }
         
         let json_str = String::from_utf8_lossy(&output.stdout);
+        let user_info: WarpUser = serde_json::from_str(&json_str)
+            .map_err(|e| format!("解析用户信息失败: {}", e))?;
+        
+        Ok(user_info)
+    }
+    
+    #[cfg(target_os = "macos")]
+    {
+        use std::process::Command;
+        
+        // 从 macOS 钥匙串读取用户信息
+        let output = Command::new("security")
+            .args(&[
+                "find-generic-password",
+                "-s", "dev.warp.Warp-Stable",
+                "-a", "User", 
+                "-w"
+            ])
+            .output()
+            .map_err(|e| format!("无法执行 security 命令: {}", e))?;
+        
+        if !output.status.success() {
+            let stderr = String::from_utf8_lossy(&output.stderr);
+            return Err(format!("无法从钥匙串读取 Warp 用户信息: {}. 请确保已登录 Warp", stderr));
+        }
+        
+        let json_str = String::from_utf8_lossy(&output.stdout).trim().to_string();
         let user_info: WarpUser = serde_json::from_str(&json_str)
             .map_err(|e| format!("解析用户信息失败: {}", e))?;
         

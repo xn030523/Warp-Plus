@@ -3,9 +3,6 @@ use winreg::enums::*;
 #[cfg(target_os = "windows")]
 use winreg::RegKey;
 
-use std::fs;
-use std::path::PathBuf;
-use serde_json::Value;
 
 #[derive(serde::Serialize)]
 pub struct RegistryResult {
