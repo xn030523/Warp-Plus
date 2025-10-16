@@ -25,12 +25,7 @@
           "identifier": "main-capability",
           "windows": ["main"],
           "permissions": [
-            "core:default",
-            "updater:default",
-            "updater:allow-check",
-            "updater:allow-download",
-            "updater:allow-download-and-install",
-            "process:allow-restart"
+            "core:default"
           ]
         }
       ]
@@ -46,18 +41,5 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
-  },
-  "plugins": {
-    "updater": {
-      "active": true,
-      "endpoints": [
-        "https://github.com/xn030523/Warp-Plus/releases/latest/download/latest.json"
-      ],
-      "dialog": true,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZDOUE5NTY5NDgwQ0YyMkQKUldRdDhneElhWldhYkM4RlVDK0hTdFVPS040YmhBODNma2Vvc2F1VTZ3WEZ3VmdOaXpXbGx3MzcK",
-      "windows": {
-        "installMode": "passive"
-      }
-    }
   }
 }

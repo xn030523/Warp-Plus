@@ -1,7 +1,8 @@
 import { useState } from "react";
 import WarpLogin from "./components/WarpLogin";
 import TempMail from "./components/TempMail";
-import UpdateChecker from "./components/UpdateChecker";
+import WarpUUID from "./components/WarpUUID";
+import MCPManager from "./components/MCPManager";
 import "./App.css";
 
 function App() {
@@ -13,10 +14,22 @@ function App() {
         <h1>Warp Plus</h1>
         <nav className="nav">
           <button 
+            className={`nav-item ${activeTab === "warp-uuid" ? "active" : ""}`}
+            onClick={() => setActiveTab("warp-uuid")}
+          >
+            我的信息
+          </button>
+          <button 
             className={`nav-item ${activeTab === "warp" ? "active" : ""}`}
             onClick={() => setActiveTab("warp")}
           >
             Warp 上号
+          </button>
+          <button 
+            className={`nav-item ${activeTab === "mcp" ? "active" : ""}`}
+            onClick={() => setActiveTab("mcp")}
+          >
+            MCP 管理
           </button>
           <button 
             className={`nav-item ${activeTab === "temp-mail" ? "active" : ""}`}
@@ -25,15 +38,13 @@ function App() {
             临时邮箱
           </button>
         </nav>
-        
-        <div className="sidebar-footer">
-          <UpdateChecker />
-        </div>
       </div>
 
       <div className="content">
         {activeTab === "warp" && <WarpLogin />}
         {activeTab === "temp-mail" && <TempMail />}
+        {activeTab === "warp-uuid" && <WarpUUID />}
+        {activeTab === "mcp" && <MCPManager />}
       </div>
     </div>
   );

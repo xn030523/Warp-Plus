@@ -18,8 +18,8 @@
 .spinner-inline {
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(36, 200, 219, 0.3);
-  border-top-color: #24c8db;
+  border: 2px solid rgba(100, 181, 246, 0.3);
+  border-top-color: #64b5f6;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
 }
@@ -48,8 +48,8 @@
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background: #f0f9fb;
-  border: 2px solid #24c8db;
+  background: #e3f2fd;
+  border: 2px solid #64b5f6;
   border-radius: 10px;
   margin-bottom: 16px;
 }
@@ -68,7 +68,7 @@
 
 .copy-btn-new {
   padding: 8px 16px;
-  background: #24c8db;
+  background: #64b5f6;
   color: white;
   border: none;
   border-radius: 6px;
@@ -82,7 +82,7 @@
 }
 
 .copy-btn-new:hover:not(:disabled) {
-  background: #1e9fb5;
+  background: #42a5f5;
   transform: scale(1.05);
 }
 
@@ -162,7 +162,7 @@
 
 .refresh-mail-btn {
   padding: 6px 12px;
-  background: #24c8db;
+  background: #64b5f6;
   color: white;
   border: none;
   border-radius: 6px;
@@ -176,7 +176,7 @@
 }
 
 .refresh-mail-btn:hover:not(:disabled) {
-  background: #1e9fb5;
+  background: #42a5f5;
 }
 
 .refresh-mail-btn:disabled {
@@ -234,17 +234,17 @@
 .mail-item {
   padding: 16px 20px;
   background: #f9f9f9;
-  border-left: 3px solid #24c8db;
+  border-left: 3px solid #64b5f6;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .mail-item:hover {
-  background: #f0f9fb;
+  background: #e3f2fd;
 }
 
 .mail-item.expanded {
-  background: #e8f8fa;
+  background: #bbdefb;
   border-left-width: 4px;
 }
 
@@ -323,98 +323,4 @@
   color: #333;
 }
 
-/* 暗色模式 */
-@media (prefers-color-scheme: dark) {
-  .email-card,
-  .mail-list {
-    background: #2a2a2a;
-  }
-
-  .loading-text {
-    color: #777;
-  }
-
-  .email-label {
-    color: #999;
-  }
-
-  .email-address-box {
-    background: #1f1f1f;
-    border-color: #24c8db;
-  }
-
-  .email-address {
-    color: #f6f6f6;
-  }
-
-  .mail-list-header {
-    border-bottom-color: #3a3a3a;
-  }
-
-  .mail-list-header h3 {
-    color: #f6f6f6;
-  }
-
-  .mail-count {
-    background: #3a3a3a;
-    color: #999;
-  }
-
-  .empty-state p {
-    color: #ccc;
-  }
-
-  .mail-item {
-    background: #1f1f1f;
-  }
-
-  .mail-item:hover {
-    background: #252525;
-  }
-
-  .mail-from {
-    color: #f6f6f6;
-  }
-
-  .mail-subject {
-    color: #ccc;
-  }
-
-  .mail-card {
-    background: #2a2a2a;
-    border-color: #3a3a3a;
-  }
-
-  .mail-item.expanded {
-    background: #1a2a2e;
-  }
-
-  .mail-detail {
-    border-top-color: #3a3a3a;
-  }
-
-  .mail-detail-meta {
-    background: #1f1f1f;
-    border-bottom-color: #3a3a3a;
-  }
-
-  .detail-meta-item {
-    color: #ccc;
-  }
-
-  .detail-label {
-    color: #999;
-  }
-
-  .mail-detail-body {
-    background: #2a2a2a;
-  }
-
-  .mail-content-iframe {
-    background: #2a2a2a;
-  }
-
-  .mail-text-content {
-    color: #f6f6f6;
-  }
-}
+/* 暗色模式已禁用 - 强制使用浅色主题 */

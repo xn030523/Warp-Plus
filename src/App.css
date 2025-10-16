@@ -31,12 +31,11 @@
 /* 侧边栏 */
 .sidebar {
   width: 220px;
-  background: linear-gradient(180deg, #24c8db 0%, #1e9fb5 100%);
+  background: linear-gradient(180deg, #64b5f6 0%, #42a5f5 100%);
   color: white;
   padding: 30px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .sidebar h1 {
@@ -74,59 +73,12 @@
   font-weight: 600;
 }
 
-.sidebar-footer {
-  margin-top: auto;
-  padding-top: 20px;
-}
-
-.update-btn {
-  width: 100%;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.update-btn:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.25);
-  transform: translateY(-2px);
-}
-
-.update-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.update-btn.has-update {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
-  border-color: #ff5252;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(255, 82, 82, 0);
-  }
-}
-
 /* 内容区域 */
 .content {
   flex: 1;
   padding: 40px;
   overflow-y: auto;
-  background: #f9f9f9;
+  background: #f5f9fc;
   display: flex;
   flex-direction: column;
 }
@@ -150,7 +102,8 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 600px;
+  max-width: 100%;
+  width: 100%;
 }
 
 .input-group {
@@ -172,6 +125,7 @@ label {
 }
 
 input {
+  width: 100%;
   padding: 12px 16px;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
@@ -179,16 +133,17 @@ input {
   transition: all 0.3s;
   outline: none;
   background: white;
+  box-sizing: border-box;
 }
 
 input:focus {
-  border-color: #24c8db;
-  box-shadow: 0 0 0 3px rgba(36, 200, 219, 0.1);
+  border-color: #64b5f6;
+  box-shadow: 0 0 0 3px rgba(100, 181, 246, 0.1);
 }
 
 .form button {
   padding: 14px;
-  background: linear-gradient(135deg, #24c8db 0%, #1e9fb5 100%);
+  background: linear-gradient(135deg, #64b5f6 0%, #42a5f5 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -202,7 +157,7 @@ input:focus {
 
 .form button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(36, 200, 219, 0.4);
+  box-shadow: 0 4px 12px rgba(100, 181, 246, 0.4);
 }
 
 .form button:active {
@@ -213,48 +168,10 @@ input:focus {
   text-align: center;
   padding: 12px;
   border-radius: 6px;
-  background: #e8f8fa;
+  background: #e3f2fd;
   font-size: 14px;
   margin-top: 10px;
   color: #333;
 }
 
-/* 暗色模式 */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #1a1a1a;
-  }
-
-  .content {
-    background: #1a1a1a;
-  }
-
-  h2 {
-    color: #f6f6f6;
-  }
-
-  label {
-    color: #ccc;
-  }
-
-  .hint {
-    color: #666;
-  }
-
-  input {
-    background: #2a2a2a;
-    border-color: #444;
-    color: #f6f6f6;
-  }
-
-  input:focus {
-    border-color: #24c8db;
-    background: #333;
-  }
-
-  .message {
-    background: #2a2a2a;
-    color: #f6f6f6;
-  }
-}
+/* 暗色模式已禁用 - 强制使用浅色主题 */
