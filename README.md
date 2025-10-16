@@ -26,12 +26,52 @@
   - 纯文本邮件格式化显示
   - 后端 Rust API 集成（`mail.chatgpt.org.uk`）
 
-### 3. UI/UX 优化
+### 3. 机器码处理工具
+- **功能**：获取和管理本机硬件信息及机器码
+- **特性**：
+  - 获取系统硬件信息（CPU、磁盘、内存等）
+  - 基于硬件信息生成唯一机器码
+  - 机器码验证和校验功能
+  - 一键复制机器码
+  - 机器码绑定与授权管理
+
+### 4. Warp UUID 生成器
+- **功能**：生成和管理 Warp UUID
+- **特性**：
+  - 一键生成新的 UUID
+  - UUID 格式验证
+  - 一键复制功能
+  - 历史记录管理
+  - 集成 Token 存储功能
+
+### 5. MCP 管理器
+- **功能**：管理 Model Context Protocol 连接和规则
+- **特性**：
+  - MCP 服务器连接配置
+  - 规则创建和编辑界面
+  - 规则导入/导出（JSON 格式）
+  - 规则注册表管理
+  - 实时连接状态显示
+
+### 6. UI/UX 优化
 - 侧边栏导航（支持多标签页切换）
 - 暗色模式自动适配
 - 组件化 CSS 管理（拆分至独立文件）
 - 响应式布局
 - 平滑动画效果
+
+## 💻 平台支持
+
+本应用基于 Tauri 构建，支持以下操作系统：
+
+- ✅ **Windows** 10/11（x64）
+- ✅ **macOS** 10.15+（Intel & Apple Silicon）
+- ✅ **Linux**（Ubuntu 20.04+、Debian、Fedora、Arch 等主流发行版）
+
+### 系统要求
+- Windows: WebView2 运行时（Windows 11 自带，Windows 10 可能需要安装）
+- macOS: macOS 10.15 Catalina 或更高版本
+- Linux: 需要安装 webkit2gtk、libappindicator 等依赖
 
 ## 🛠 技术栈
 
@@ -54,20 +94,19 @@
 ## 📋 下一步计划
 
 ### 1. 机器码处理工具
-- [ ] 获取本机硬件信息
-- [ ] 生成/验证机器码
-- [ ] 机器码绑定与授权管理
+- [x] 获取本机硬件信息
+- [x] 生成/验证机器码
+- [x] 机器码绑定与授权管理
 
 ### 2. MCP（Model Context Protocol）集成
-- [ ] MCP 服务器连接管理
-- [ ] 上下文同步与共享
-- [ ] 多模型切换支持
+- [x] MCP 服务器连接管理
+- [x] 上下文同步与共享
 
 ### 3. 规则管理系统
-- [ ] 自定义规则配置界面
-- [ ] 规则导入/导出
-- [ ] 规则验证与测试
-- [ ] 规则模板库
+- [x] 自定义规则配置界面
+- [x] 规则导入/导出
+- [x] 规则验证与测试
+- [x] 规则模板库
 
 ### 4. 其他优化
 - [ ] 应用设置页面
@@ -106,7 +145,11 @@ warp-plus/
 │   │   ├── WarpLogin.tsx    # Warp 登录组件
 │   │   ├── WarpLogin.css    # Warp 登录样式
 │   │   ├── TempMail.tsx     # 临时邮箱组件
-│   │   └── TempMail.css     # 临时邮箱样式
+│   │   ├── TempMail.css     # 临时邮箱样式
+│   │   ├── WarpUUID.tsx     # UUID 生成器组件
+│   │   ├── WarpUUID.css     # UUID 生成器样式
+│   │   ├── MCPManager.tsx   # MCP 管理器组件
+│   │   └── MCPManager.css   # MCP 管理器样式
 │   ├── App.tsx              # 主应用
 │   ├── App.css              # 全局样式
 │   └── main.tsx             # 入口文件
@@ -114,7 +157,10 @@ warp-plus/
 │   ├── src/
 │   │   ├── commands/        # Tauri 命令模块
 │   │   │   ├── mod.rs
-│   │   │   └── email.rs     # 邮箱 API 命令
+│   │   │   ├── email.rs     # 邮箱 API 命令
+│   │   │   ├── warp_token.rs # Warp Token 管理
+│   │   │   ├── mcp_rules.rs  # MCP 规则管理
+│   │   │   └── registry.rs   # 注册表管理
 │   │   ├── lib.rs           # Rust 库入口
 │   │   └── main.rs          # Rust 主入口
 │   ├── Cargo.toml           # Rust 依赖配置
