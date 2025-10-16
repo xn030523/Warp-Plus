@@ -32,6 +32,7 @@ pub fn run() {
             warp_token::refresh_access_token,
             warp_token::query_warp_usage,
             warp_token::get_warp_usage,
+            warp_token::get_local_warp_usage,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

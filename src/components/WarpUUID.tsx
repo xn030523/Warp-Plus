@@ -10,11 +10,12 @@ interface RegistryResult {
 
 interface WarpUsage {
   email: string;
-  user_id: string;
+  user_id?: string;
   usage: {
     is_unlimited: boolean;
     request_limit: number;
     requests_used: number;
+    requests_remaining: number;
     next_refresh_time: string;
   };
 }
@@ -81,10 +82,18 @@ function WarpUUID() {
   const fetchWarpUsage = async () => {
     try {
       setUsageLoading(true);
-      const usage = await invoke<WarpUsage>('get_warp_usage');
-      setWarpUsage(usage);
+      // 优先使用 API 获取实时数据，失败时回退到本地配置
+      try {
+        const usage = await invoke<WarpUsage>('get_warp_usage');
+        setWarpUsage(usage);
+      } catch (apiError) {
+        console.log('API 调用失败，尝试本地配置:', apiError);
+        const usage = await invoke<WarpUsage>('get_local_warp_usage');
+        setWarpUsage(usage);
+      }
     } catch (error) {
       console.error('获取额度失败:', error);
+      setMessage({ type: 'error', text: `无法获取额度信息，请确保已登录 Warp` });
     } finally {
       setUsageLoading(false);
     }
@@ -164,10 +173,12 @@ function WarpUUID() {
                 <span className="info-label">邮箱:</span>
                 <span className="info-value">{warpUsage.email}</span>
               </div>
-              <div className="info-item">
-                <span className="info-label">User ID:</span>
-                <span className="info-value">{warpUsage.user_id}</span>
-              </div>
+              {warpUsage.user_id && (
+                <div className="info-item">
+                  <span className="info-label">User ID:</span>
+                  <span className="info-value">{warpUsage.user_id}</span>
+                </div>
+              )}
             </div>
 
             {warpUsage.usage.is_unlimited ? (
@@ -196,7 +207,7 @@ function WarpUUID() {
                   <div className="usage-item">
                     <span className="usage-label">剩余:</span>
                     <span className="usage-number remaining">
-                      {warpUsage.usage.request_limit - warpUsage.usage.requests_used} 次
+                      {warpUsage.usage.requests_remaining} 次
                     </span>
                   </div>
                   <div className="usage-item">

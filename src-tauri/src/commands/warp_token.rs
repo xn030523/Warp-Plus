@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use reqwest;
+use serde_json::Value;
 
 #[cfg(target_os = "windows")]
 use winapi::um::dpapi::CryptUnprotectData;
@@ -52,6 +53,7 @@ pub struct UsageInfo {
     pub is_unlimited: bool,
     pub request_limit: i32,
     pub requests_used: i32,
+    pub requests_remaining: i32,
     pub next_refresh_time: String,
 }
 
@@ -107,21 +109,50 @@ fn get_warp_user_file() -> PathBuf {
 /// 读取并解密 Warp 用户信息
 #[tauri::command]
 pub async fn get_warp_user_info() -> Result<WarpUser, String> {
-    let user_file = get_warp_user_file();
-    
-    if !user_file.exists() {
-        return Err("Warp 用户文件不存在，请确保已登录 Warp".to_string());
+    #[cfg(target_os = "windows")]
+    {
+        let user_file = get_warp_user_file();
+        
+        if !user_file.exists() {
+            return Err("Warp 用户文件不存在，请确保已登录 Warp".to_string());
+        }
+
+        let encrypted_data = std::fs::read(&user_file)
+            .map_err(|e| format!("读取文件失败: {}", e))?;
+
+        let decrypted_data = decrypt_dpapi(&encrypted_data)?;
+        
+        let user_info: WarpUser = serde_json::from_slice(&decrypted_data)
+            .map_err(|e| format!("解析用户信息失败: {}", e))?;
+
+        Ok(user_info)
     }
-
-    let encrypted_data = std::fs::read(&user_file)
-        .map_err(|e| format!("读取文件失败: {}", e))?;
-
-    let decrypted_data = decrypt_dpapi(&encrypted_data)?;
     
-    let user_info: WarpUser = serde_json::from_slice(&decrypted_data)
-        .map_err(|e| format!("解析用户信息失败: {}", e))?;
-
-    Ok(user_info)
+    #[cfg(any(target_os = "linux", target_os = "macos"))]
+    {
+        use std::process::Command;
+        
+        // 从系统钥匙串读取用户信息
+        let output = Command::new("secret-tool")
+            .args(&["lookup", "service", "dev.warp.Warp", "key", "User"])
+            .output()
+            .map_err(|e| format!("无法执行 secret-tool: {}", e))?;
+        
+        if !output.status.success() {
+            return Err("无法读取 Warp 用户信息，请确保已登录 Warp".to_string());
+        }
+        
+        let json_str = String::from_utf8_lossy(&output.stdout);
+        let user_info: WarpUser = serde_json::from_str(&json_str)
+            .map_err(|e| format!("解析用户信息失败: {}", e))?;
+        
+        Ok(user_info)
+    }
+    
+    #[cfg(not(any(target_os = "windows", target_os = "linux", target_os = "macos")))]
+    {
+        Err("此功能暂不支持当前操作系统".to_string())
+    }
 }
 
 /// 使用 refresh_token 刷新获取 access_token
@@ -251,10 +282,12 @@ pub async fn get_warp_usage() -> Result<serde_json::Value, String> {
     let usage_info = query_warp_usage(token_response.access_token).await?;
 
     // 4. 转换为前端格式
+    let requests_remaining = usage_info.request_limit - usage_info.requests_used;
     let usage = UsageInfo {
         is_unlimited: usage_info.is_unlimited,
         request_limit: usage_info.request_limit,
         requests_used: usage_info.requests_used,
+        requests_remaining,
         next_refresh_time: usage_info.next_refresh_time,
     };
 
@@ -264,4 +297,92 @@ pub async fn get_warp_usage() -> Result<serde_json::Value, String> {
         "user_id": user_info.local_id,
         "usage": usage,
     }))
+}
+
+/// 从本地配置文件读取配额信息（仅用于 Linux/macOS 备用方案）
+#[tauri::command]
+pub async fn get_local_warp_usage() -> Result<serde_json::Value, String> {
+    // Linux/macOS: ~/.config/warp-terminal/user_preferences.json
+    #[cfg(any(target_os = "linux", target_os = "macos"))]
+    {
+        let config_path = dirs::config_dir()
+            .ok_or("无法获取配置目录")?  
+            .join("warp-terminal")
+            .join("user_preferences.json");
+        
+        if !config_path.exists() {
+            return Err("Warp 配置文件不存在，请确保已安装并运行过 Warp Terminal".to_string());
+        }
+        
+        let content = std::fs::read_to_string(&config_path)
+            .map_err(|e| format!("读取配置文件失败: {}", e))?;
+        
+        let config: Value = serde_json::from_str(&content)
+            .map_err(|e| format!("解析配置文件失败: {}", e))?;
+        
+        // 从 prefs.AIRequestLimitInfo 中读取配额信息
+        let limit_info_str = config
+            .get("prefs")
+            .and_then(|p| p.get("AIRequestLimitInfo"))
+            .and_then(|v| v.as_str())
+            .ok_or("配置文件中未找到配额信息")?;
+        
+        let limit_info: Value = serde_json::from_str(limit_info_str)
+            .map_err(|e| format!("解析配额信息失败: {}", e))?;
+        
+        let limit = limit_info["limit"].as_i64().unwrap_or(0) as i32;
+        let used = limit_info["num_requests_used_since_refresh"].as_i64().unwrap_or(0) as i32;
+        let remaining = limit - used;
+        let next_refresh = limit_info["next_refresh_time"].as_str().unwrap_or("").to_string();
+        let is_unlimited = limit_info["is_unlimited"].as_bool().unwrap_or(false);
+        
+        // 读取用户邮箱（使用命令行 sqlite3）
+        let email = {
+            // Linux: ~/.local/state/warp-terminal/warp.sqlite
+            let home = dirs::home_dir().ok_or("无法获取用户目录")?;
+            let state_path = home.join(".local").join("state").join("warp-terminal").join("warp.sqlite");
+            
+            if state_path.exists() {
+                use std::process::Command;
+                match Command::new("sqlite3")
+                    .arg(&state_path)
+                    .arg("SELECT email FROM current_user_information LIMIT 1;")
+                    .output()
+                {
+                    Ok(output) => {
+                        if output.status.success() {
+                            String::from_utf8_lossy(&output.stdout).trim().to_string()
+                        } else {
+                            "已登录".to_string()
+                        }
+                    },
+                    Err(_) => "已登录".to_string()
+                }
+            } else {
+                "未知".to_string()
+            }
+        };
+        
+        Ok(serde_json::json!({
+            "email": email,
+            "usage": {
+                "is_unlimited": is_unlimited,
+                "request_limit": limit,
+                "requests_used": used,
+                "requests_remaining": remaining,
+                "next_refresh_time": next_refresh,
+            }
+        }))
+    }
+    
+    // Windows: 使用原有的方法
+    #[cfg(target_os = "windows")]
+    {
+        get_warp_usage().await
+    }
+    
+    #[cfg(not(any(target_os = "windows", target_os = "linux", target_os = "macos")))]
+    {
+        Err("此功能暂不支持当前操作系统".to_string())
+    }
 }

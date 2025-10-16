@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { openUrl } from '@tauri-apps/plugin-opener';
 import './WarpLogin.css';
 
 function WarpLogin() {
@@ -30,15 +31,16 @@ function WarpLogin() {
     return `warp://auth/desktop_redirect?refresh_token=${encodeURIComponent(refreshToken)}&state=${encodeURIComponent(state)}`;
   }, [refreshToken, state]);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!generatedUrl) return;
     
-    const link = document.createElement('a');
-    link.href = generatedUrl;
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      // 使用 Tauri opener 插件打开 warp:// 协议链接
+      await openUrl(generatedUrl);
+    } catch (error) {
+      console.error('打开链接失败:', error);
+      alert(`打开链接失败: ${error}`);
+    }
   };
 
   return (
