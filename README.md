@@ -1,6 +1,6 @@
 # Warp Plus
 
-> 基于 Tauri + React + TypeScript 构建的桌面工具集合应用
+> 基于 Tauri + React + TypeScript 构建的桌面工具集合应用 🐕多已闭
 
 ## 📦 已完成功能
 
