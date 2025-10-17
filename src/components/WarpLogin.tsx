@@ -91,11 +91,11 @@ function WarpLogin({ session, onBalanceUpdate }: WarpLoginProps) {
         <div className="header-right">
           {session ? (
             <button
-              className={`auto-fill-btn ${session.balance >= 1 ? '' : 'disabled'}`}
+              className={`auto-fill-btn ${session.balance >= 4 ? '' : 'disabled'}`}
               onClick={async () => {
                 if (!session) return;
-                if (session.balance < 1) {
-                  setMessage({ type: 'error', text: '余额不足（需要≥1元）' });
+                if (session.balance < 4) {
+                  setMessage({ type: 'error', text: '余额不足（需要≥4元）' });
                   return;
                 }
                 try {
@@ -114,8 +114,8 @@ function WarpLogin({ session, onBalanceUpdate }: WarpLoginProps) {
                   setClaimLoading(false);
                 }
               }}
-              disabled={!session || session.balance < 1 || claimLoading}
-              title={!session ? '请先登录' : (session.balance < 1 ? '余额不足（需要≥1元）' : '')}
+              disabled={!session || session.balance < 4 || claimLoading}
+              title={!session ? '请先登录' : (session.balance < 4 ? '余额不足（需要≥4元）' : '')}
             >
               {claimLoading ? '领取中...' : '自动领取并填充'}
             </button>
@@ -129,6 +129,9 @@ function WarpLogin({ session, onBalanceUpdate }: WarpLoginProps) {
                 {statsLoading ? '↻' : '↻'}
               </button>
             </div>
+          )}
+          {!session && (
+            <div className="login-tip">登录后使用号池</div>
           )}
         </div>
       </div>
@@ -169,11 +172,10 @@ function WarpLogin({ session, onBalanceUpdate }: WarpLoginProps) {
           
           {/* 广告栏 */}
           <div className="ad-banner">
-            <span className="ad-icon">🎁</span>
-            <span className="ad-text">购买 Warp 2500 额度账户</span>
-            <span className="ad-price">💰 <strong>1元</strong>/个</span>
+            <span className="ad-icon">💬</span>
+            <span className="ad-text">交流群</span>
             <span className="ad-group">
-              QQ群: 
+              QQ群:
               <a 
                 href="https://qm.qq.com/q/vi1EFO0mxG" 
                 target="_blank" 

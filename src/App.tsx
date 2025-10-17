@@ -5,6 +5,7 @@ import WarpLogin from "./components/WarpLogin";
 import TempMail from "./components/TempMail";
 import WarpUUID from "./components/WarpUUID";
 import MCPManager from "./components/MCPManager";
+import Unlimited from "./components/Unlimited";
 import "./App.css";
 
 interface UserSession {
@@ -71,6 +72,12 @@ function App() {
             Warp 上号
           </button>
           <button 
+            className={`nav-item ${activeTab === "unlimited" ? "active" : ""}`}
+            onClick={() => setActiveTab("unlimited")}
+          >
+            Warp 无限额度
+          </button>
+          <button 
             className={`nav-item ${activeTab === "mcp" ? "active" : ""}`}
             onClick={() => setActiveTab("mcp")}
           >
@@ -114,6 +121,7 @@ function App() {
             }}
           />
         )}
+        {activeTab === "unlimited" && <Unlimited />}
         {activeTab === "temp-mail" && <TempMail />}
         {activeTab === "warp-uuid" && <WarpUUID />}
         {activeTab === "mcp" && <MCPManager />}

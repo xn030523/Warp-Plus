@@ -203,15 +203,13 @@ pub struct StatsResponse {
     pub data: Option<StatsData>,
 }
 
-/// 获取号池统计数据
+/// 获取号池统计数据（公开接口）
 #[tauri::command]
 pub async fn get_stats() -> Result<StatsData, String> {
-    let session = load_session()?;
     let client = reqwest::Client::new();
     
     let response = client
         .get(format!("{}/api/stats", API_BASE_URL))
-        .header("Authorization", format!("Bearer {}", session.token))
         .send()
         .await
         .map_err(|e| format!("请求失败: {}", e))?;

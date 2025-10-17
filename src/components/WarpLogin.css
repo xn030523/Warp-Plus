@@ -295,3 +295,17 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* 未登录提示卡片 */
+.login-tip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+  border: 2px solid #ffb74d;
+  border-radius: 8px;
+  color: #e65100;
+  font-weight: 600;
+  white-space: nowrap;
+}

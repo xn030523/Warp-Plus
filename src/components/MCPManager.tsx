@@ -849,11 +849,10 @@ function MCPManager() {
 
       {/* 广告栏 */}
       <div className="ad-banner">
-        <span className="ad-icon">🎁</span>
-        <span className="ad-text">购买 Warp 2500 额度账户</span>
-        <span className="ad-price">💰 <strong>1元</strong>/个</span>
+        <span className="ad-icon">💬</span>
+        <span className="ad-text">交流群</span>
         <span className="ad-group">
-          QQ群: 
+          QQ群:
           <a 
             href="https://qm.qq.com/q/vi1EFO0mxG" 
             target="_blank" 

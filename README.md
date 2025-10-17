@@ -11,7 +11,6 @@
   - 实时生成 `warp://` 协议链接
   - 一键触发系统协议处理器打开 Warp
   - 图文并茂的使用教程（可点击放大查看）
-  - 集成广告栏（QQ群链接）
 
 ### 2. 临时邮箱工具
 - **功能**：快速生成临时邮箱地址并实时查收邮件
@@ -144,43 +143,43 @@ warp-plus/
 │   └── workflows/
 │       └── release.yml            # GitHub Actions 发布
 ├── public/
-│   ├── tauri.svg
-│   ├── vite.svg
-│   └── warp/                      # 教程截图
+│   ├── Unlimited/                # warp无限额度示意图
+│   │   └── 1.png
+│   └── warp/                     # 使用教程截图
 │       ├── 1.png … 6.png
+├── index.html                    # 入口页面（标题：Warp Plus）
 ├── src/
-│   ├── App.tsx                    # 主应用
-│   ├── App.css                    # 全局样式
-│   ├── main.tsx                   # 前端入口
+│   ├── App.tsx                   # 主应用
+│   ├── App.css                   # 全局样式
+│   ├── main.tsx                  # 前端入口
 │   ├── vite-env.d.ts
-│   ├── assets/
-│   │   └── react.svg
-│   └── components/                # React 组件
-│       ├── Login.tsx / Login.css  # 账户中心（登录/充值/记录）
-│       ├── WarpLogin.tsx / .css   # Warp 上号器（自动领取/填充）
-│       ├── TempMail.tsx / .css    # 临时邮箱
-│       ├── WarpUUID.tsx / .css    # 我的信息/机器码与额度
-│       ├── MCPManager.tsx / .css  # MCP 管理
+│   └── components/               # React 组件
+│       ├── Login.tsx / Login.css # 账户中心（登录/充值/记录）
+│       ├── WarpLogin.tsx / .css  # Warp 上号器（自动领取/填充）
+│       ├── TempMail.tsx / .css   # 临时邮箱
+│       ├── WarpUUID.tsx / .css   # 我的信息/机器码与额度
+│       ├── MCPManager.tsx / .css # MCP 管理
+│       └── Unlimited.tsx / .css  # warp无限额度
 ├── src-tauri/
 │   ├── build.rs
 │   ├── Cargo.toml
 │   ├── Cargo.lock
-│   ├── tauri.conf.json            # Tauri 配置（version: 1.2.0）
+│   ├── tauri.conf.json           # Tauri 配置（version: 1.2.0）
 │   ├── .gitignore
 │   ├── capabilities/
 │   │   └── default.json
-│   ├── icons/                     # 应用图标
+│   ├── icons/                    # 应用图标
 │   └── src/
-│       ├── main.rs                # 二进制入口
-│       ├── lib.rs                 # 库入口 / 注册命令
-│       └── commands/              # Tauri 命令模块
+│       ├── main.rs               # 二进制入口
+│       ├── lib.rs                # 库入口 / 注册命令
+│       └── commands/             # Tauri 命令模块
 │           ├── mod.rs
-│           ├── auth.rs            # 登录/余额/充值/统计/领取/记录
-│           ├── email.rs           # 临时邮箱
-│           ├── mcp_rules.rs       # MCP 规则
-│           ├── registry.rs        # 系统注册表/机器码
-│           └── warp_token.rs      # Warp Token/额度
-├── package.json                   # 版本：1.2.0
+│           ├── auth.rs           # 登录/余额/充值/统计/领取/记录
+│           ├── email.rs          # 临时邮箱
+│           ├── mcp_rules.rs      # MCP 规则
+│           ├── registry.rs       # 系统注册表/机器码
+│           └── warp_token.rs     # Warp Token/额度
+├── package.json                  # 版本：1.2.0
 └── README.md
 ```
 
