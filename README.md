@@ -140,32 +140,48 @@ pnpm tauri build
 
 ```
 warp-plus/
+├── .github/
+│   └── workflows/
+│       └── release.yml            # GitHub Actions 发布
+├── public/
+│   ├── tauri.svg
+│   ├── vite.svg
+│   └── warp/                      # 教程截图
+│       ├── 1.png … 6.png
 ├── src/
-│   ├── components/          # React 组件
-│   │   ├── WarpLogin.tsx    # Warp 登录组件
-│   │   ├── WarpLogin.css    # Warp 登录样式
-│   │   ├── TempMail.tsx     # 临时邮箱组件
-│   │   ├── TempMail.css     # 临时邮箱样式
-│   │   ├── WarpUUID.tsx     # UUID 生成器组件
-│   │   ├── WarpUUID.css     # UUID 生成器样式
-│   │   ├── MCPManager.tsx   # MCP 管理器组件
-│   │   └── MCPManager.css   # MCP 管理器样式
-│   ├── App.tsx              # 主应用
-│   ├── App.css              # 全局样式
-│   └── main.tsx             # 入口文件
+│   ├── App.tsx                    # 主应用
+│   ├── App.css                    # 全局样式
+│   ├── main.tsx                   # 前端入口
+│   ├── vite-env.d.ts
+│   ├── assets/
+│   │   └── react.svg
+│   └── components/                # React 组件
+│       ├── Login.tsx / Login.css  # 账户中心（登录/充值/记录）
+│       ├── WarpLogin.tsx / .css   # Warp 上号器（自动领取/填充）
+│       ├── TempMail.tsx / .css    # 临时邮箱
+│       ├── WarpUUID.tsx / .css    # 我的信息/机器码与额度
+│       ├── MCPManager.tsx / .css  # MCP 管理
 ├── src-tauri/
-│   ├── src/
-│   │   ├── commands/        # Tauri 命令模块
-│   │   │   ├── mod.rs
-│   │   │   ├── email.rs     # 邮箱 API 命令
-│   │   │   ├── warp_token.rs # Warp Token 管理
-│   │   │   ├── mcp_rules.rs  # MCP 规则管理
-│   │   │   └── registry.rs   # 注册表管理
-│   │   ├── lib.rs           # Rust 库入口
-│   │   └── main.rs          # Rust 主入口
-│   ├── Cargo.toml           # Rust 依赖配置
-│   └── tauri.conf.json      # Tauri 配置
-└── README.md                # 项目文档
+│   ├── build.rs
+│   ├── Cargo.toml
+│   ├── Cargo.lock
+│   ├── tauri.conf.json            # Tauri 配置（version: 1.2.0）
+│   ├── .gitignore
+│   ├── capabilities/
+│   │   └── default.json
+│   ├── icons/                     # 应用图标
+│   └── src/
+│       ├── main.rs                # 二进制入口
+│       ├── lib.rs                 # 库入口 / 注册命令
+│       └── commands/              # Tauri 命令模块
+│           ├── mod.rs
+│           ├── auth.rs            # 登录/余额/充值/统计/领取/记录
+│           ├── email.rs           # 临时邮箱
+│           ├── mcp_rules.rs       # MCP 规则
+│           ├── registry.rs        # 系统注册表/机器码
+│           └── warp_token.rs      # Warp Token/额度
+├── package.json                   # 版本：1.2.0
+└── README.md
 ```
 
 ## 🔗 相关链接
