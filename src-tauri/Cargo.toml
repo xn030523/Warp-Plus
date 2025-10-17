@@ -1,6 +1,6 @@
 [package]
 name = "warp-plus"
-version = "0.1.0"
+version = "1.3.0"
 description = "Warp Plus - DaiJu"
 authors = ["呆橘 <3586177963@qq.com>"]
 edition = "2021"
