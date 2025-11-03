@@ -27,22 +27,22 @@
 <div align="center">
 
 ### Warp 无限额度网关
-![Warp 登录](public/warp-ui/1.png)
+![Warp 登录](warp-ui/1.png)
 
 ### 我的信息
-![Warp 信息](public/warp-ui/2.png)
+![Warp 信息](warp-ui/2.png)
 
 ### MCP管理
-![Warp 上号](public/warp-ui/3.png)
+![Warp 上号](warp-ui/3.png)
 
 ### 账户切换
-![Warp 网关](public/warp-ui/4.png)
+![Warp 网关](warp-ui/4.png)
 
 ### 一键上号
-![Warp 账户](public/warp-ui/5.png)
+![Warp 账户](warp-ui/5.png)
 
 ### 其他模块
-![Warp 换号](public/warp-ui/6.png)
+![Warp 换号](warp-ui/6.png)
 
 </div>
 
